@@ -1,0 +1,135 @@
+body.load {
+    opacity: 1;
+}
+
+.container {
+    position: relative;
+    margin: 5% auto auto auto;
+    background-color: inherit;
+    width: 70%;
+}
+
+.container2 {
+    position: relative;
+    margin: auto auto auto auto;
+    background-color: inherit;
+    width: 70%;
+}
+
+.container label {
+    display: inline-block;
+    clear: left;
+    width: 20%;
+    text-align: right;
+}
+
+.container form {
+    text-align: center;
+}
+
+.container input {
+    width: 70%;
+    clear: both;
+}
+
+.container select {
+    width: 72%;
+    clear: both;
+}
+
+.container input[type=submit] {
+    width: 20%;
+    text-align: center;
+}
+
+.header {
+    position: relative;
+    margin: 10% auto 10% auto;
+    width: 70%;
+}
+
+div#container-groups, div#container-links, div#container-status, div#container-search, div#container-header {
+    height: 50%;
+    text-align: center;
+    padding-top: 1em;
+}
+
+div#container-links {
+    padding-top: 1em;
+}
+
+div#container-status {
+    padding-top: 8em;
+}
+
+select, input {
+    box-shadow: 0.2em 0.2em 0.8em #151515;
+    border: none;
+    outline: none;
+    background: #1a1d20;
+    font-family: inherit;
+    padding: 1em;
+    margin: 1em;
+    -webkit-transition: background 1s;
+    -moz-transition: background 1s;
+    -ms-transition: background 1s;
+    -o-transition: background 1s;
+    transition: background 1s;
+    width: 20%;
+    color: #797979;
+    position: relative;
+}
+
+.contact_form input {
+    width: 30%;
+}
+
+input:focus {
+    background: inherit;
+    color: #a0a6b4;
+}
+
+.lost_link {
+    padding-top: 0em !important;
+}
+
+.link {
+    padding: 1em;
+    margin: 1em;
+    width: 28%;
+    text-align: center;
+}
+
+a, a:visited {
+    color: deepskyblue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d7d0c7;
+}
+
+table, th, td {
+    border: 1px solid whitesmoke;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+}
+
+td.button {
+    padding: 0;
+}
+
+td.button input[type=submit] {
+    width: 80%;
+}
+
+a.delete, a:visited.delete {
+    color: red;
+    text-align: right;
+    position: absolute;
+    right: 5%;
+}

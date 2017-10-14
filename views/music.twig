@@ -1,0 +1,115 @@
+{% extends 'layout.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" href="../css/music.css">
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container">
+        <form onsubmit="play(); return false;">
+            <input id="song-input" placeholder="Type to filter, or paste a YouTube URL" value="" autocomplete="off"
+                   onkeyup="filter()">
+            <h6 id="last-message" class="grey-text"></h6>
+            <input type="submit" class="music-stop btn red" value="STOP" onmousedown="stopPlayback()"/>
+            <input type="submit" class="music-right btn orange" value="SKIP" onmousedown="skipTrack()"/>
+        </form>
+
+        <br/>
+        <div id="music-container">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block post_js %}
+    <script type="application/javascript">
+        function play() {
+            var songInput = document.getElementById('song-input');
+            if (songInput.value === '') {
+                return;
+            }
+            showProgress();
+
+            var url = "music/play_song";
+
+            var song = songInput.value.toLowerCase();
+            if (song.indexOf("youtube") !== -1 || song.indexOf("youtu.be") !== -1) {
+                url = "play_youtube";
+            }
+            $.get(url + "?song=" + songInput.value, function () {
+                hideProgress();
+                $("input").blur();
+            });
+            songInput.value = '';
+        }
+
+        function stopPlayback() {
+            showProgress();
+            $.get("music/stop_playback", function () {
+                hideProgress();
+                $("input").blur();
+            });
+        }
+
+        function skipTrack() {
+            showProgress();
+            $.get("music/skip_track", function () {
+                hideProgress();
+                $("input").blur();
+            });
+        }
+
+        $(document).ready(function () {
+            setTimeout("getLastMessage()", 1000);
+        });
+
+        function getLastMessage() {
+            $.get("last_message", function (message) {
+                $("#last-message").text(message);
+                setTimeout("getLastMessage()", 1000);
+            });
+        }
+
+        $(document).ready(function () {
+            getMusicList();
+        });
+
+        function getMusicList() {
+            $.get("music/list", function (messages) {
+                $("#music-container").html(messages);
+            });
+        }
+
+        function playSong(song) {
+            showProgress();
+            $.get("music/play_song?song=" + song, function () {
+                hideProgress();
+                $("input").blur();
+            });
+        }
+
+        function filter() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("song-input");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("music-list-table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+{% endblock %}

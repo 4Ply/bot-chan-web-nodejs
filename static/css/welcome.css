@@ -1,0 +1,69 @@
+.movement {
+    position: absolute;
+    font-size: 20px;
+    color: limegreen;
+    background-color: transparent;
+    overflow: hidden;
+    animation: moveMinus;
+}
+
+@keyframes moveMinus {
+    to {
+        top: 600px;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.timeSpan {
+    animation: moveMinus infinite;
+}
+
+body {
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.container-basic {
+    text-align: left;
+}
+
+.smiley {
+    font-family: 'Roboto', sans-serif;
+    font-size: 550px;
+    position: absolute;
+    top: 10%;
+    left: 60%;
+}
+
+.wip, .login, .content {
+    display: none;
+}
+
+.logout-btn {
+    position: absolute;
+    top: 2%;
+    left: 93%;
+    text-align: right;
+}
+
+.g-signin2 {
+    width: 100%;
+}
+
+.g-signin2 > div {
+    margin: 0 auto;
+}
+
+a {
+    font-family: "Roboto", sans-serif !important;
+    text-shadow: none !important;
+}

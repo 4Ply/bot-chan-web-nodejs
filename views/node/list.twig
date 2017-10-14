@@ -1,0 +1,19 @@
+<table id="music-list-table" class="centered bordered">
+    <thead>
+    <tr>
+        <th>Node name</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for item in nodeList %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td><a class='waves-effect waves-light btn {% if item.enabled == true %}light-blue{% else %}grey{% endif %} }}'
+                   onclick='toggleNode("{{ item.name }}", "{{ not item.enabled }}")'>{% if item.enabled == true %}ENABLED{% else %}DISABLED{% endif %}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

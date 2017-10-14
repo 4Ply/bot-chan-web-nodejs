@@ -1,0 +1,50 @@
+{% extends 'layout.twig' %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="/css/profile.css">
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container">
+        <form onsubmit="sendMessage(); return false;">
+            <input id="message-input" placeholder="Send a message" value="" autocomplete="false">
+        </form>
+
+        <h5>Message History</h5>
+        <div id="message-container" class="row">
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block post_js %}
+    <script type="application/javascript">
+        function sendMessage() {
+            var messageInput = document.getElementById('message-input');
+            if (messageInput.value === '') {
+                return;
+            }
+            showProgress();
+            $.get("chat/send_message?message=" + messageInput.value, function () {
+                hideProgress();
+            });
+            messageInput.value = '';
+        }
+
+        $(document).ready(function () {
+            setTimeout("getMessages()", 1000);
+        });
+
+        function getMessages() {
+            $.get("chat/history", function (messages) {
+                $("#message-container").html(messages);
+                setTimeout("getMessages()", 1000);
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+<table style="width:100%" class="centered bordered">
+    <thead>
+    <tr>
+        <th>Platform ID</th>
+        <th>message</th>
+    </tr>
+    </thead>
+
+    {% for item in chatList %}
+        <tr>
+            <td>{{ item.platformID|escape }}</td>
+            <td>{{ item.message|escape }}</td>
+        </tr>
+    {% endfor %}
+</table>

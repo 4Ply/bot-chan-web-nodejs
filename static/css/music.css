@@ -1,0 +1,7 @@
+form input[type=submit] {
+    width: 6% !important;
+}
+
+#song-input {
+    margin: 0;
+}
