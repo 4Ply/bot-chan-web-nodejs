@@ -6,7 +6,7 @@ function join() {
     $("#welcome-title").fadeOut('slow');
     $("#sign-in-button").fadeOut('slow');
     $("#smiley").fadeOut("slow", function () {
-        window.location.pathname = "/music";
+        window.location.pathname = "/profile";
     });
     $("#login-form").submit();
 }
