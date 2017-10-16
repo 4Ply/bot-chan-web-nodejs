@@ -1,0 +1,17 @@
+<table class="centered bordered">
+    <thead>
+    <tr>
+        <th>Platform</th>
+        <th>Client ID</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for item in platformUserList %}
+        <tr>
+            <td>{{ item.platform }}</td>
+            <td>{{ item.clientID }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

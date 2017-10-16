@@ -12,12 +12,15 @@ router.get('/', loginCheck, function (req, res) {
 
 router.get('/edit', loginCheck, function (req, res) {
     api.getProfileName(req.user.id, function (profileName) {
-        api.getNodeList(req.user.id, function (nodeList) {
-            res.render('profile.twig', {
-                title: 'Profile',
-                showNavBar: true,
-                profileName: profileName,
-                nodeList: nodeList
+        api.getPlatformUserList(req.user.id, function (platformUserList) {
+            api.getNodeList(req.user.id, function (nodeList) {
+                res.render('profile.twig', {
+                    title: 'Profile',
+                    showNavBar: true,
+                    profileName: profileName,
+                    platformUserList: platformUserList,
+                    nodeList: nodeList
+                });
             });
         });
     });
@@ -54,35 +57,6 @@ router.get('/update_node_status/:node', function (req, res) {
         );
     } else {
         res.send("")
-    }
-});
-
-
-router.get('/list', function (req, res) {
-    if (req.isAuthenticated()) {
-        request({
-                url: api.root_url + "autoDeleteRepliesForPlatform?clientID=" + req.user.id,
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    "apikey": api.key
-                },
-                body: {
-                    "matchers": [".*"]
-                },
-                json: true
-            }, function (error, response, body) {
-                if (!error && response.statusCode === 200) {
-                    res.render('reply_list.twig', {
-                        replyList: body
-                    });
-                } else {
-                    console.log(error)
-                }
-            }
-        );
-    } else {
-        res.send("");
     }
 });
 

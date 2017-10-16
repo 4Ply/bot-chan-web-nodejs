@@ -16,7 +16,6 @@ router.get('/list', function (req, res) {
                     "apikey": api.key
                 },
                 body: {
-                    "platform": "SITE-CHAT",
                     "matchers": [".*"]
                 },
                 json: true

@@ -25,7 +25,7 @@ exports.sendMessage = function (req, res, message) {
             if (!error && response.statusCode === 200) {
                 res.send("Success");
             } else {
-                console.log(error);
+                console.log("Send Message Error: (" + response.statusCode + ") " + error);
                 res.send("Error");
             }
         }
@@ -46,7 +46,7 @@ exports.getProfileName = function (id, done) {
                 console.log("Username: " + body);
                 done(body);
             } else {
-                console.log(error);
+                console.log("Username Error: (" + response.statusCode + ") " + error);
             }
         }
     );
@@ -85,7 +85,29 @@ exports.getNodeList = function (id, done) {
                 console.log("Node List: " + body);
                 done(body);
             } else {
-                console.log(error);
+                console.log("Node List Error: (" + response.statusCode + ") " + error);
+                done([]);
+            }
+        }
+    );
+};
+
+exports.getPlatformUserList = function (id, done) {
+    request({
+            url: this.root_url + "/platformUsers?clientID=" + id,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "apikey": this.key
+            },
+            json: true
+        }, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                console.log("Platform User List: " + body);
+                done(body);
+            } else {
+                console.log("Platform User List Error: (" + response.statusCode + ") " + error);
+                done([]);
             }
         }
     );

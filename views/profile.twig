@@ -7,59 +7,64 @@
 
 {% block body %}
 
-    <div class="container">
+<div class="container">
 
-        <h4 class="header">General Details</h4>
+    <h4 class="header">General Details</h4>
+    <br/>
+    <div class="row">
+        <form onsubmit="updateName(); return false;">
+            <label for="name-input" class="s4">Name</label>
+            <input id="name-input" placeholder="What's your name?" value="{{ profileName|escape }}"
+                   class="s4"
+                   autocomplete="off">
+        </form>
+    </div>
+
+
+    <br/>
+    <h4 class="header">Platform Users</h4>
+    <div class="row" id="node-container">
+        {% include 'profile/user_list.twig' with {
+            platformUserList: platformUserList
+        } %}
         <br/>
-        <div class="row">
-            <form onsubmit="updateName(); return false;">
-                <label for="name-input" class="s4">Name</label>
-                <input id="name-input" placeholder="What's your name?" value="{{ profileName|escape }}"
-                       class="s4"
-                       autocomplete="off">
-            </form>
-        </div>
 
-
-        <br/>
         <h4 class="header">Nodes</h4>
         <div class="row" id="node-container">
-            {% include 'node/list.twig' with {
-                nodes: nodes
-            } %}
+            {% include 'node/list.twig' %}
         </div>
     </div>
 
-{% endblock %}
+    {% endblock %}
 
 
-{% block post_js %}
+    {% block post_js %}
 
-    <script type="application/javascript">
-        function updateName() {
-            var nameInput = document.getElementById('name-input');
-            if (nameInput.value === '') {
-                return;
+        <script type="application/javascript">
+            function updateName() {
+                var nameInput = document.getElementById('name-input');
+                if (nameInput.value === '') {
+                    return;
+                }
+                showProgress();
+                $("input").blur();
+
+                var url = "update_name";
+                $.get(url + "?name=" + nameInput.value, function () {
+                    Materialize.toast('Name updated!', 3000)
+                });
             }
-            showProgress();
-            $("input").blur();
 
-            var url = "update_name";
-            $.get(url + "?name=" + nameInput.value, function () {
-                Materialize.toast('Name updated!', 3000)
-            });
-        }
+            function toggleNode(node, enabled) {
+                showProgress();
+                $("input").blur();
 
-        function toggleNode(node, enabled) {
-            showProgress();
-            $("input").blur();
+                var url = "/profile/update_node_status/" + node;
+                $.get(url + "?enabled=" + enabled, function () {
+                    Materialize.toast('Node preferences updated!', 3000)
+                    window.location.reload();
+                });
+            }
+        </script>
 
-            var url = "/profile/update_node_status/" + node;
-            $.get(url + "?enabled=" + enabled, function () {
-                Materialize.toast('Node preferences updated!', 3000)
-                window.location.reload();
-            });
-        }
-    </script>
-
-{% endblock %}
+    {% endblock %}
