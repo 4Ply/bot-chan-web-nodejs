@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/list', function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "autoDeleteRepliesForPlatform?clientID=" + req.user.id + "&platform=SITE-CHAT",
+                url: api.root_url + "autoDeleteRepliesForClientID?clientID=" + req.user.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",

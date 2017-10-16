@@ -18,7 +18,6 @@ exports.sendMessage = function (req, res, message) {
             body: {
                 "message": message,
                 "sender": req.user.id,
-                "platform": "SITE-CHAT",
                 "direct": true
             },
             json: true
@@ -35,7 +34,7 @@ exports.sendMessage = function (req, res, message) {
 
 exports.getProfileName = function (id, done) {
     request({
-            url: this.root_url + "/name?sender=" + id + "&platform=SITE-CHAT",
+            url: this.root_url + "/name?sender=" + id,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -55,7 +54,7 @@ exports.getProfileName = function (id, done) {
 
 exports.updateProfileName = function (id, name) {
     request({
-            url: this.root_url + "/name?name=" + name + "&sender=" + id + "&platform=SITE-CHAT",
+            url: this.root_url + "/name?name=" + name + "&sender=" + id,
             method: "PATCH",
             headers: {
                 "content-type": "application/json",
@@ -74,7 +73,7 @@ exports.updateProfileName = function (id, name) {
 
 exports.getNodeList = function (id, done) {
     request({
-            url: this.root_url + "/nodes?sender=" + id + "&platform=SITE-CHAT",
+            url: this.root_url + "/nodes?sender=" + id,
             method: "GET",
             headers: {
                 "content-type": "application/json",

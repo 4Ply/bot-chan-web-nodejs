@@ -36,7 +36,7 @@ router.get('/update_node_status/:node', function (req, res) {
         var enabled = req.query.enabled;
 
         request({
-                url: api.root_url + "/nodeStatus?sender=" + req.user.id + "&platform=SITE-CHAT&node=" + node + "&enabled=" + enabled,
+                url: api.root_url + "/nodeStatus?sender=" + req.user.id + "&node=" + node + "&enabled=" + enabled,
                 method: "PATCH",
                 headers: {
                     "content-type": "application/json",
@@ -61,14 +61,13 @@ router.get('/update_node_status/:node', function (req, res) {
 router.get('/list', function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "autoDeleteRepliesForPlatform?clientID=" + req.user.id + "&platform=SITE-CHAT",
+                url: api.root_url + "autoDeleteRepliesForPlatform?clientID=" + req.user.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
                     "apikey": api.key
                 },
                 body: {
-                    "platform": "SITE-CHAT",
                     "matchers": [".*"]
                 },
                 json: true

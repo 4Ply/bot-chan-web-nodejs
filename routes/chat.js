@@ -24,14 +24,13 @@ router.get('/send_message', loginCheck, function (req, res) {
 router.get('/history', loginCheck, function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "messagesForUser?clientID=" + req.user.id + "&platform=SITE-CHAT",
+                url: api.root_url + "messagesForUser?clientID=" + req.user.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
                     "apikey": api.key
                 },
                 body: {
-                    "platform": "SITE-CHAT",
                     "matchers": [".*"]
                 },
                 json: true
