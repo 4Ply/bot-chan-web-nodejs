@@ -1,6 +1,13 @@
 #!/bin/sh
 
 docker stop bot-chan-web-nodejs
+
+docker run -d \
+    --name bot-chan-web-mongodb \
+    -v /docker_data/Bot-chan-web-nodejs/mongodb:/data/db \
+    -p 27017:27017 \
+    mongo
+
 docker run -d --rm \
     --name bot-chan-web-nodejs \
     -e GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID \

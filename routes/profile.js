@@ -11,9 +11,9 @@ router.get('/', loginCheck, function (req, res) {
 });
 
 router.get('/edit', loginCheck, function (req, res) {
-    api.getProfileName(req.user.id, function (profileName) {
-        api.getPlatformUserList(req.user.id, function (platformUserList) {
-            api.getNodeList(req.user.id, function (nodeList) {
+    api.getProfileName(req.user.meta.id, function (profileName) {
+        api.getPlatformUserList(req.user.meta.id, function (platformUserList) {
+            api.getNodeList(req.user.meta.id, function (nodeList) {
                 res.render('profile.twig', {
                     title: 'Profile',
                     showNavBar: true,
@@ -28,7 +28,7 @@ router.get('/edit', loginCheck, function (req, res) {
 
 router.get('/update_name', function (req, res) {
     if (req.isAuthenticated()) {
-        api.updateProfileName(req.user.id, req.query.name);
+        api.updateProfileName(req.user.meta.id, req.query.name);
         res.send('');
     }
 });
@@ -39,7 +39,7 @@ router.get('/update_node_status/:node', function (req, res) {
         var enabled = req.query.enabled;
 
         request({
-                url: api.root_url + "/nodeStatus?sender=" + req.user.id + "&node=" + node + "&enabled=" + enabled,
+                url: api.root_url + "/nodeStatus?sender=" + req.user.meta.id + "&node=" + node + "&enabled=" + enabled,
                 method: "PATCH",
                 headers: {
                     "content-type": "application/json",

@@ -9,7 +9,7 @@ var router = express.Router();
 router.get('/list', function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "autoDeleteRepliesForClientID?clientID=" + req.user.id,
+                url: api.root_url + "autoDeleteRepliesForClientID?clientID=" + req.user.meta.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",

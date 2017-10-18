@@ -7,7 +7,7 @@ var router = express.Router();
 
 
 router.get('/', loginCheck, function (req, res) {
-    api.getProfileName(req.user.id, function (profileName) {
+    api.getProfileName(req.user.meta.id, function (profileName) {
         res.render('music.twig', {
             title: 'Music',
             showNavBar: true,

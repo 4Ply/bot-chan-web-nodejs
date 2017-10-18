@@ -28,7 +28,9 @@ var userSchema = mongoose.Schema({
         email: String,
         name: String
     },
-    name: String
+    meta: {
+        id: String
+    }
 
 });
 

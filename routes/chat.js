@@ -7,7 +7,7 @@ var router = express.Router();
 
 
 router.get('/', loginCheck, function (req, res) {
-    api.getProfileName(req.user.id, function (profileName) {
+    api.getProfileName(req.user.meta.id, function (profileName) {
         res.render('chat.twig', {
             title: 'Chat',
             showNavBar: true,
@@ -24,7 +24,7 @@ router.get('/send_message', loginCheck, function (req, res) {
 router.get('/history', loginCheck, function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "messagesForUser?clientID=" + req.user.id,
+                url: api.root_url + "messagesForUser?clientID=" + req.user.meta.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",

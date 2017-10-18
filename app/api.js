@@ -17,7 +17,7 @@ exports.sendMessage = function (req, res, message) {
             },
             body: {
                 "message": message,
-                "sender": req.user.id,
+                "sender": req.user.meta.id,
                 "direct": true
             },
             json: true
