@@ -112,3 +112,24 @@ exports.getPlatformUserList = function (id, done) {
         }
     );
 };
+
+exports.getDirectMessageTokenList = function (id, done) {
+    request({
+            url: this.root_url + "/token/list?clientID=" + id,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "apikey": this.key
+            },
+            json: true
+        }, function (error, response, body) {
+            if (!error && response.statusCode === 200) {
+                console.log("DM Token List: " + body);
+                done(body);
+            } else {
+                console.log("DM Token List Error: (" + response.statusCode + ") " + error);
+                done([]);
+            }
+        }
+    );
+};

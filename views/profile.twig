@@ -23,16 +23,24 @@
 
     <br/>
     <h4 class="header">Platform Users</h4>
-    <div class="row" id="node-container">
+    <div class="row" id="platform-user-container">
         {% include 'profile/user_list.twig' with {
             platformUserList: platformUserList
         } %}
         <br/>
+    </div>
 
-        <h4 class="header">Nodes</h4>
-        <div class="row" id="node-container">
-            {% include 'node/list.twig' %}
-        </div>
+    <h4 class="header">Direct Message Tokens</h4>
+    <div class="row" id="direct-message-token-container">
+        {% include 'profile/direct_message_token_list.twig' with {
+            directMessageTokenList: directMessageTokenList
+        } %}
+        <br/>
+    </div>
+
+    <h4 class="header">Nodes</h4>
+    <div class="row" id="node-container">
+        {% include 'node/list.twig' %}
     </div>
 
     {% endblock %}

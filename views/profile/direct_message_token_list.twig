@@ -1,0 +1,30 @@
+<table class="centered bordered">
+    <thead>
+    <tr>
+        <th>Token</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for item in directMessageTokenList %}
+        <tr>
+            <td>{{ item }}</td>
+            <td>
+                <a class='waves-effect waves-light btn light-blue'
+                   target="_blank"
+                   href="https://dm.bot-chan.com/{{ item }}?message=Test%20Message">Send Test Message</a>
+            </td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td>
+            <a class='waves-effect waves-light btn light-blue'
+               target="_blank"
+               href="https://dm.bot-chan.com/{{ item }}?message=Test%20Message">Generate Token</a>
+        </td>
+        <td></td>
+    </tr>
+
+    </tbody>
+</table>

@@ -100,8 +100,8 @@ h3 {
     content: "";
 }
 
-table td .btn {
-    width: 20%;
+table td .node-btn {
+    width: 20% !important;
     min-width: 120px;
 }
 

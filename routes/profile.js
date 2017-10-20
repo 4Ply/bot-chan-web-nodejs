@@ -13,13 +13,16 @@ router.get('/', loginCheck, function (req, res) {
 router.get('/edit', loginCheck, function (req, res) {
     api.getProfileName(req.user.meta.id, function (profileName) {
         api.getPlatformUserList(req.user.meta.id, function (platformUserList) {
-            api.getNodeList(req.user.meta.id, function (nodeList) {
-                res.render('profile.twig', {
-                    title: 'Profile',
-                    showNavBar: true,
-                    profileName: profileName,
-                    platformUserList: platformUserList,
-                    nodeList: nodeList
+            api.getDirectMessageTokenList(req.user.meta.id, function (directMessageTokenList) {
+                api.getNodeList(req.user.meta.id, function (nodeList) {
+                    res.render('profile.twig', {
+                        title: 'Profile',
+                        showNavBar: true,
+                        profileName: profileName,
+                        platformUserList: platformUserList,
+                        directMessageTokenList: directMessageTokenList,
+                        nodeList: nodeList
+                    });
                 });
             });
         });
