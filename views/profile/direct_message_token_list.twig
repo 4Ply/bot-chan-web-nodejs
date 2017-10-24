@@ -8,11 +8,11 @@
     <tbody>
     {% for item in directMessageTokenList %}
         <tr>
-            <td>{{ item }}</td>
+            <td>{{ item|url_encode }}</td>
             <td>
                 <a class='waves-effect waves-light btn light-blue'
                    target="_blank"
-                   href="https://dm.bot-chan.com/{{ item }}?message=Test%20Message">Send Test Message</a>
+                   href="https://dm.bot-chan.com/{{ item|url_encode }}?message=Test%20Message">Send Test Message</a>
             </td>
         </tr>
     {% endfor %}
@@ -21,7 +21,7 @@
         <td>
             <a class='waves-effect waves-light btn light-blue'
                target="_blank"
-               href="https://dm.bot-chan.com/{{ item }}?message=Test%20Message">Generate Token</a>
+               href="https://dm.bot-chan.com/{{ item|url_encode }}?message=Test%20Message">Generate Token</a>
         </td>
         <td></td>
     </tr>
