@@ -38,7 +38,7 @@
 
             var song = songInput.value.toLowerCase();
             if (song.indexOf("youtube") !== -1 || song.indexOf("youtu.be") !== -1) {
-                url = "play_youtube";
+                url = "music/play_youtube";
             }
             $.get(url + "?song=" + songInput.value, function () {
                 hideProgress();

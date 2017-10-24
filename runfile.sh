@@ -6,6 +6,7 @@ docker run -d \
     --name bot-chan-web-mongodb \
     -v /docker_data/Bot-chan-web-nodejs/mongodb:/data/db \
     -p 27017:27017 \
+    --restart="always" \
     mongo
 
 docker run -d --rm \

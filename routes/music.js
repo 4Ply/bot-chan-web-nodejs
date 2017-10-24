@@ -45,6 +45,10 @@ router.get('/play_song', loginCheck, function (req, res) {
     api.sendMessage(req, res, "play song " + req.query.song);
 });
 
+router.get('/play_youtube', loginCheck, function (req, res) {
+    api.sendMessage(req, res, "download and play " + req.query.song);
+});
+
 router.get('/skip_track', loginCheck, function (req, res) {
     api.sendMessage(req, res, "skip song");
 });
