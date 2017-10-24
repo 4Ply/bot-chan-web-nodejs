@@ -16,7 +16,7 @@ module.exports = {
     'googleAuth': {
         'clientID': process.env.GOOGLE_CLIENT_ID,
         'clientSecret': process.env.GOOGLE_CLIENT_SECRET,
-        'callbackURL': 'https://www.bot-chan.com/auth/google/callback'
+        'callbackURL': (process.env.BOT_CHAN_WEB_URL || 'https://www.bot-chan.com') + '/auth/google/callback'
     }
 
 };
