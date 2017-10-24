@@ -24,7 +24,7 @@ router.get('/send_message', loginCheck, function (req, res) {
 router.get('/history', loginCheck, function (req, res) {
     if (req.isAuthenticated()) {
         request({
-                url: api.root_url + "messagesForUser?clientID=" + req.user.meta.id,
+                url: api.root_url + "messagesForUser?secondsBeforeNow=604800&clientID=" + req.user.meta.id,
                 method: "POST",
                 headers: {
                     "content-type": "application/json",
