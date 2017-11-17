@@ -7,6 +7,13 @@ var key = process.env.BOT_CHAN_API_KEY_WEB;
 exports.root_url = rootUrl;
 exports.key = key;
 
+exports.createErrorCallback = function (next) {
+    return function (statusCode) {
+        next(new Error(statusCode));
+    };
+};
+
+
 exports.sendMessage = function (req, res, message) {
     request({
             url: this.root_url + "/message",
@@ -27,12 +34,14 @@ exports.sendMessage = function (req, res, message) {
             } else {
                 console.log("Send Message Error: (" + response.statusCode + ") " + error);
                 res.send("Error");
+                console.log(response);
             }
         }
     );
 };
 
-exports.getProfileName = function (id, done) {
+
+exports.getProfileName = function (id, done, errorCallback) {
     request({
             url: this.root_url + "/name?sender=" + id,
             method: "GET",
@@ -46,13 +55,18 @@ exports.getProfileName = function (id, done) {
                 console.log("Username: " + body);
                 done(body);
             } else {
-                console.log("Username Error: (" + response.statusCode + ") " + error);
+                console.log(error);
+                const statusCode = ((response && response.statusCode) || '500');
+                console.log("Username Error: (" + statusCode + ") " + error);
+                console.log(response);
+                errorCallback(statusCode);
             }
         }
     );
 };
 
-exports.updateProfileName = function (id, name) {
+
+exports.updateProfileName = function (id, name, errorCallback) {
     request({
             url: this.root_url + "/name?name=" + name + "&sender=" + id,
             method: "PATCH",
@@ -66,10 +80,13 @@ exports.updateProfileName = function (id, name) {
                 console.log("Name update: " + body);
             } else {
                 console.log(error);
+                console.log(response);
+                errorCallback(response.statusCode, response);
             }
         }
     );
 };
+
 
 exports.getNodeList = function (id, done) {
     request({
@@ -87,10 +104,12 @@ exports.getNodeList = function (id, done) {
             } else {
                 console.log("Node List Error: (" + response.statusCode + ") " + error);
                 done([]);
+                console.log(response);
             }
         }
     );
 };
+
 
 exports.getPlatformUserList = function (id, done) {
     request({
@@ -108,10 +127,12 @@ exports.getPlatformUserList = function (id, done) {
             } else {
                 console.log("Platform User List Error: (" + response.statusCode + ") " + error);
                 done([]);
+                console.log(response);
             }
         }
     );
 };
+
 
 exports.getDirectMessageTokenList = function (id, done) {
     request({
@@ -129,6 +150,7 @@ exports.getDirectMessageTokenList = function (id, done) {
             } else {
                 console.log("DM Token List Error: (" + response.statusCode + ") " + error);
                 done([]);
+                console.log(response);
             }
         }
     );

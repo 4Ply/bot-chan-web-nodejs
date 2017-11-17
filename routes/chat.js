@@ -6,14 +6,14 @@ var api = require('../app/api');
 var router = express.Router();
 
 
-router.get('/', loginCheck, function (req, res) {
+router.get('/', loginCheck, function (req, res, next) {
     api.getProfileName(req.user.meta.id, function (profileName) {
         res.render('chat.twig', {
             title: 'Chat',
             showNavBar: true,
             name: profileName
         });
-    });
+    }, api.createErrorCallback(next));
 });
 
 

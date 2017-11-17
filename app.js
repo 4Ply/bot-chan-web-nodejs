@@ -8,6 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 var flash = require('connect-flash');
 
+var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var configDB = require('./config/database');
 mongoose.connect(configDB.url); // connect to our database
@@ -34,7 +35,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // required for passport
-app.use(session({secret: process.env.NODE_SESSION_SECRET}));
+app.use(session({
+    secret: process.env.NODE_SESSION_SECRET,
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    })
+}));
+
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -58,8 +65,11 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
+    res.locals.title = "Error";
+    res.locals.showNavBar = true;
+
+    res.locals.message1 = req.app.get('env') === 'development' ? err.message : 'Oh no!';
+    res.locals.message2 = req.app.get('env') === 'development' ? '' : 'Something broke. Please try again, <a href="mailto:support@bot-chan.com?Subject=Bot-chan%20website%20error" target="_blank">Or contact a human</a>';
     res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page

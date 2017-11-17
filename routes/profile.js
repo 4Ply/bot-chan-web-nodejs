@@ -10,7 +10,7 @@ router.get('/', loginCheck, function (req, res) {
     res.redirect('/profile/edit');
 });
 
-router.get('/edit', loginCheck, function (req, res) {
+router.get('/edit', loginCheck, function (req, res, next) {
     api.getProfileName(req.user.meta.id, function (profileName) {
         api.getPlatformUserList(req.user.meta.id, function (platformUserList) {
             api.getDirectMessageTokenList(req.user.meta.id, function (directMessageTokenList) {
@@ -26,7 +26,7 @@ router.get('/edit', loginCheck, function (req, res) {
                 });
             });
         });
-    });
+    }, api.createErrorCallback(next));
 });
 
 router.get('/update_name', function (req, res) {

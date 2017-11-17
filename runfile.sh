@@ -17,6 +17,7 @@ docker run -d \
     -e GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET \
     -e BOT_CHAN_API_KEY_WEB=$BOT_CHAN_API_KEY_WEB \
     -e NODE_SESSION_SECRET=$NODE_SESSION_SECRET \
+    -e NODE_ENV="production" \
     -p 3001:3000 \
     --restart="always" \
     --link bot-chan-web-mongodb:mongodb \
