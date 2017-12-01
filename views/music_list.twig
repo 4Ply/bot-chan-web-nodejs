@@ -2,7 +2,7 @@
     {% for item in musicList %}
       <tr>
           <td>{{ item|escape }}</td>
-          <td><a class='quick-play-song' href='#' onclick='playSong("{{ item|escape }}")'>Play</a></td>
+          <td><a class='quick-play-song' href='#' onclick='playSong("{{ item|escape }}")'>Queue</a></td>
       </tr>
     {% endfor %}
 </table>
