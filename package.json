@@ -1,6 +1,6 @@
 {
   "name": "bot-chan-web-nodejs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "start-dev": "BOT_CHAN_WEB_PORT=3002 BOT_CHAN_WEB_URL=https://dev.www.bot-chan.com node ./bin/www",
