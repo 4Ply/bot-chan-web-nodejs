@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var flash = require('connect-flash');
+var minify = require('express-minify');
+var minifyHTML = require('express-minify-html');
+var compression = require('compression');
 
 var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
@@ -47,6 +50,20 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 require('./config/passport')(passport);
 
+app.use(compression());
+app.use(minify());
+app.use(minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+        removeComments: true,
+        collapseWhitespace: true,
+        collapseBooleanAttributes: true,
+        removeAttributeQuotes: true,
+        removeEmptyAttributes: true,
+        minifyJS: true
+    }
+}));
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.use('/', auth);
