@@ -42,9 +42,10 @@ router.get('/list', function (req, res) {
                 json: true
             }, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
-                    res.render('music_list.twig', {
-                        musicList: body
-                    });
+                    res.send(body);
+                    // res.render('music_list.twig', {
+                    //     musicList: body
+                    // });
                 } else {
                     console.log(error)
                 }

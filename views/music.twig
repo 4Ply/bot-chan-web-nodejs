@@ -2,6 +2,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="../css/music.css">
+    <link href="/css/clusterize.css" rel="stylesheet">
 {% endblock %}
 
 
@@ -17,18 +18,34 @@
         </form>
 
         <br/>
-        <div id="music-container">
-
-        </div>
 
         <table id="music-list"></table>
-        <div id="music-list-pager"></div>
+        <table id="music-list-table" style="width:100%" class="centered bordered">
+            <tbody id="music-list-tbody">
+
+            </tbody>
+        </table>
+
+
+        <div class="clusterize">
+            <div id="scrollArea" class="clusterize-scroll">
+                <table>
+                    <tbody id="contentArea" class="clusterize-content">
+                    <tr class="clusterize-no-data">
+                        <td>Loading music list…</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
 
 
 {% block post_js %}
+    <script src="/js/clusterize.min.js"></script>
+
     <script type="application/javascript">
         function play() {
             var songInput = document.getElementById('song-input');
@@ -48,6 +65,7 @@
                 $("input").blur();
             });
             songInput.value = '';
+            filter();
         }
 
         function stopPlayback() {
@@ -67,46 +85,76 @@
         }
 
         $(document).ready(function () {
-            setTimeout("getLastMessage()", 1000);
-        });
-
-        function getLastMessage() {
-            $.get("last_message", function (message) {
-                $("#last-message").text(message);
-                setTimeout("getLastMessage()", 1000);
-            });
-        }
-
-        $(document).ready(function () {
             getMusicList();
         });
 
-        function getMusicList() {
-            $.get("music/list", function (messages) {
-                $("#music-container").html(messages);
 
-                jQuery('#grid').jqGrid({
-                    hoverrows:false,
-                    "viewrecords":true,
-                    "jsonReader":{"repeatitems":false,"subgrid":{"repeatitems":false}},
-                    "gridview":true,
-                    "url":"json_list",
-                    "loadonce": true,
-                    "rowNum":10,
-                    "height":200,
-                    "autowidth":true,
-                    "sortname":"Name",
-                    "rowList":[10,30,40],
-                    "datatype":"json",
-                    "colModel":[
-                        {"name":"Name","index":"Name","sorttype":"string","key":true,"editable":true},
-                        {"name":"ShipName","index":"ShipName","sorttype":"string","classes":"ui-ellipsis","editable":true}
-                    ],
-                    "pager":"#music-list-pager"
+        data = [];
+        var clusterize;
+
+        function getMusicList() {
+            $.get("music/list", function (musicList) {
+                // $("#music-container").html(musicList);
+
+                data = [];
+                $.each(musicList, function (index, songName) {
+                    var rowItem = "<tr>" +
+                        "<td>" + songName + "</td>" +
+                        "<td><a class='quick-play-song' href='#' onclick='playSong(\"" + songName + "\")'>Queue</a></td>" +
+                        "</tr>";
+
+                    data.push({
+                        songName: songName,
+                        markup: rowItem,
+                        active: true
+                    });
                 });
 
+                clusterize = new Clusterize({
+                    rows: filterRows(data),
+                    scrollId: 'scrollArea',
+                    contentId: 'contentArea',
+                    blocks_in_cluster: 20
+                });
             });
         }
+
+        var filterRows = function (rows) {
+            var results = [];
+            for (var i = 0, ii = rows.length; i < ii; i++) {
+                if (rows[i].active) {
+                    results.push(rows[i].markup)
+                }
+            }
+            return results;
+        };
+
+        var filter = function () {
+            var input, filter;
+            input = document.getElementById("song-input");
+            filter = input.value.toUpperCase();
+
+            for (var i = 0, ii = data.length; i < ii; i++) {
+                var suitable = false;
+                if (filter === "" || data[i].songName.toUpperCase().indexOf(filter) > -1) {
+                    suitable = true;
+                }
+
+                data[i].active = suitable;
+            }
+
+            // for (var i = 0, ii = data.length; i < ii; i++) {
+            //     var suitable = false;
+            //
+            //     for (var j = 0, jj = data[i].songName.length; j < jj; j++) {
+            //         if (data[i].songName[j].toString().indexOf(document.getElementById('song-input').value) + 1) {
+            //             suitable = true;
+            //         }
+            //     }
+            //     data[i].active = suitable;
+            // }
+            clusterize.update(filterRows(data));
+        };
 
         function playSong(song) {
             showProgress();
@@ -116,7 +164,7 @@
             });
         }
 
-        function filter() {
+        function filter2() {
             var input, filter, table, tr, td, i;
             input = document.getElementById("song-input");
             filter = input.value.toUpperCase();
