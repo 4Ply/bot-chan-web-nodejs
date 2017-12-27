@@ -6,7 +6,21 @@ var api = require('../app/api');
 var router = express.Router();
 
 
-router.get('/', loginCheck, function (req, res, next) {
+function musicNodeEnabled(req, res, next) {
+    api.isNodeEnabled(req.user.meta.id, "4Ply/MUSIC", function (isEnabled) {
+        if (isEnabled === true) {
+            next();
+        } else {
+            res.render('enable_node.twig', {
+                title: 'Music',
+                showNavBar: true,
+                nodeName: "4Ply/MUSIC"
+            });
+        }
+    });
+}
+
+router.get('/', loginCheck, musicNodeEnabled, function (req, res, next) {
     api.getProfileName(req.user.meta.id, function (profileName) {
         res.render('music.twig', {
             title: 'Music',

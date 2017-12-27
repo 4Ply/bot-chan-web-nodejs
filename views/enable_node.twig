@@ -1,0 +1,21 @@
+{% extends 'layout.twig' %}
+
+{% block css %}
+
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <h1>The '{{ nodeName }}' node needs to be enabled to use this page</h1>
+        <div style="text-align: center;">
+            <a class='waves-effect waves-light btn node-btn light-blue'
+               onclick='toggleNode("{{ nodeName|url_encode }}", "true")'>ENABLE {{ nodeName }}</a>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block post_js %}
+    <script type="application/javascript" src="/js/toggle_node.js"></script>
+{% endblock %}

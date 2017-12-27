@@ -111,6 +111,19 @@ exports.getNodeList = function (id, done) {
 };
 
 
+exports.isNodeEnabled = function (id, nodeName, done) {
+    exports.getNodeList(id, function (nodeList) {
+        for (let item of nodeList) {
+            if (item.name === nodeName && item.enabled === true) {
+                done(true);
+                return;
+            }
+        }
+        done(false);
+    });
+};
+
+
 exports.getPlatformUserList = function (id, done) {
     request({
             url: this.root_url + "/platformUsers?clientID=" + id,

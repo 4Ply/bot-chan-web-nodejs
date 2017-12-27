@@ -20,6 +20,9 @@
         <div id="music-container">
 
         </div>
+
+        <table id="music-list"></table>
+        <div id="music-list-pager"></div>
     </div>
 
 {% endblock %}
@@ -81,6 +84,27 @@
         function getMusicList() {
             $.get("music/list", function (messages) {
                 $("#music-container").html(messages);
+
+                jQuery('#grid').jqGrid({
+                    hoverrows:false,
+                    "viewrecords":true,
+                    "jsonReader":{"repeatitems":false,"subgrid":{"repeatitems":false}},
+                    "gridview":true,
+                    "url":"json_list",
+                    "loadonce": true,
+                    "rowNum":10,
+                    "height":200,
+                    "autowidth":true,
+                    "sortname":"Name",
+                    "rowList":[10,30,40],
+                    "datatype":"json",
+                    "colModel":[
+                        {"name":"Name","index":"Name","sorttype":"string","key":true,"editable":true},
+                        {"name":"ShipName","index":"ShipName","sorttype":"string","classes":"ui-ellipsis","editable":true}
+                    ],
+                    "pager":"#music-list-pager"
+                });
+
             });
         }
 
