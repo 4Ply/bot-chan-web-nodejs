@@ -7,10 +7,18 @@ var router = express.Router();
 
 
 var renderWelcome = function (req, res) {
-    res.render('welcome.twig', {
-        title: "At your service",
-        authenticated: req.isAuthenticated()
-    });
+    if (req.isAuthenticated() && req.cookies.redirectTo) {
+        const redirectTo = req.cookies.redirectTo;
+        res.clearCookie('redirectTo');
+
+        console.log('Redirect to: ' + redirectTo);
+        res.redirect(redirectTo);
+    } else {
+        res.render('welcome.twig', {
+            title: "At your service",
+            authenticated: req.isAuthenticated()
+        });
+    }
 };
 
 router.get('/', loginCheck, renderWelcome);

@@ -1,5 +1,4 @@
 var express = require('express');
-var loginCheck = require('../app/login_check');
 var request = require('request');
 var api = require('../app/api');
 
