@@ -28,6 +28,6 @@
     "passport-twitter": "~1.0.4",
     "request": "^2.88.0",
     "serve-favicon": "~2.5.0",
-    "twig": "~0.10.3"
+    "twig": "~1.15.0"
   }
 }
